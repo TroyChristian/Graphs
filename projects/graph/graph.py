@@ -8,31 +8,65 @@ class Graph:
     """Represent a graph as a dictionary of vertices mapping labels to edges."""
     def __init__(self):
         self.vertices = {}
+        #self.queue = Queue() 
 
     def add_vertex(self, vertex_id):
         """
         Add a vertex to the graph.
         """
-        pass  # TODO
+        #This is the equivalent of adding a key to our dictionary in this abstraction, its values represent its connections
+        if vertex_id not in self.vertices:
+            self.vertices[vertex_id] = set()
+        else:
+            print("That vertex already exists in the graph")
 
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
         """
-        pass  # TODO
+        #Take v1 as a key, add v2 to its values to represent an edge being created
+        #add_edge(2,1) expected output: {2{1}}
+        if v1 in self.vertices and v2 in self.vertices: # make sure both vertices exist, so we can connect
+            self.vertices[v1].add(v2)
+           # self.vertices[v2].add(v1) # now this is bidirectional, the edge goes both ways.
+
+
 
     def get_neighbors(self, vertex_id):
         """
         Get all neighbors (edges) of a vertex.
         """
-        pass  # TODO
+        #  neighbors = self.vertices[vertex_id] and that's a set.
+        neighbors = self.vertices[vertex_id]
+        #print(neighbors)
+        print(neighbors)
+        """ for neighbor in  neighbors:
+            self.queue.enqueue(neighbor) """
 
     def bft(self, starting_vertex):
         """
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        visited = set()
+        current_node = 0
+        queue = Queue()
+
+        queue.enqueue(starting_vertex)
+        while queue.size() > 0:
+            current_node = queue.dequeue()
+            if current_node not in visited:
+                visited.add(current_node)
+                for neighbor in self.vertices[current_node]:
+                    queue.enqueue(neighbor)
+
+       
+
+
+        
+
+
+
 
     def dft(self, starting_vertex):
         """
