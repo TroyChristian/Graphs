@@ -73,7 +73,15 @@ class Graph:
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        stack = Stack()
+        visited = set()
+
+        while stack.size() > 0:
+            current_node = stack.pop()
+            if current_node not in visited:
+                visited.add(current_node)
+                for neighbor in vertices[current_node]:
+                    stack.push(neighbor)
 
     def dft_recursive(self, starting_vertex):
         """
@@ -90,7 +98,13 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        queue = Queue()
+        visited = set()
+
+        while queue.size() > 0:
+            route = queue.dequeue()
+            last_vertex = route[-1]
+
 
     def dfs(self, starting_vertex, destination_vertex):
         """
