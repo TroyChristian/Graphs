@@ -30,8 +30,7 @@ class Graph:
 def build_graph(ancestors):
     graph = Graph()
     for parent, child in ancestors:
-        parent = pair[0])
-        child = pair[1]
+       
 
         graph.add_vertex(parent)
         graph.add_vertex(child)
@@ -40,17 +39,22 @@ def build_graph(ancestors):
     return graph 
 
 def earliest_ancestor(ancestors, starting_node):
+    graph = build_graph(ancestors)
     stack  = Stack()
     visited = set()
 
-    stack.push([starting_node])
+    stack.push([starting_node]) #path to starting node
+    longest_path = []
+    aged_one = -1
 
     while stack.size() > 0:
-        path = stack.pop()
-        current_node = path[-1]
+        path = stack.pop() # We just popped an entire list off the "stack"
+        current_node = path[-1] # Current node is the last element in that list
 
-        if len(path) > len(longest_path):
+        #if path is longer, orpath is equal but the id is smaller
+        if (len(path) > len(longest_path)) or (len(path) == len(longest_path_) and current_node < aged_one):
             longest_path = path 
+            aged_one = -1 # for if they dont have an ancestor
 
         if current_node not in visited:
             visited.add(current_node)
@@ -58,8 +62,10 @@ def earliest_ancestor(ancestors, starting_node):
             parents = graph.get_neighbors(current_node)
 
             for parent in parents:
-                new_path = path + [parent]
-                stack.push[new_path]
+                new_path = path + [parent] #take our current path list, put parent in a new list, mush them.
+                stack.push[new_path] #Push this new path list onto the stack
+
+        return longest_path[-1]
 
 
 
