@@ -76,17 +76,45 @@ class SocialGraph:
 
 
     def get_all_social_paths(self, user_id):
-        """
+         """
         Takes a user's user_id as an argument
-
+​
         Returns a dictionary containing every user in that user's
         extended network with the shortest friendship path between them.
-
+​
         The key is the friend's ID and the value is the path.
+​
+        Plan: BFT, use dictionary as visited
         """
         visited = {}  # Note that this is a dictionary, not a set
-        # !!!! IMPLEMENT ME
+​
+        q = Queue()
+        q.enqueue([user_id])
+​
+        # while q isn't empty
+        while q.size() > 0:
+        ## dequeue the current path
+            current_path = q.dequeue()
+​
+        ## grab last vertex from path
+            current_user = current_path[-1]
+​
+            ## if it hasn't been visited
+            if current_user not in visited:
+        ### add to our dictionary
+        #### { friend_id: path }
+                visited[current_user] = current_path
+​
+                friends = self.friendships[current_user]
+        ### then enqueue PATHS TO each of our neighbors
+                for friend in friends:
+                    path_to_friend = current_path + [friend]
+​
+                    q.enqueue(path_to_friend)
+        
+        
         return visited
+
 
 
 if __name__ == '__main__':
