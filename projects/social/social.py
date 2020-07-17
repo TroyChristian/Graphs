@@ -1,4 +1,17 @@
 import random 
+class Queue():
+    def __init__(self):
+        self.queue = []
+    def enqueue(self, value):
+        self.queue.append(value)
+    def dequeue(self):
+        if self.size() > 0:
+            return self.queue.pop(0)
+        else:
+            return None
+    def size(self):
+        return len(self.queue)
+        
 class User:
     def __init__(self, name):
         self.name = name
@@ -74,9 +87,8 @@ class SocialGraph:
         for friendship in random_friendships:
             self.add_friendship(friendship[0], friendship[1])
 
-
     def get_all_social_paths(self, user_id):
-         """
+        """
         Takes a user's user_id as an argument
 ​
         Returns a dictionary containing every user in that user's
@@ -87,34 +99,53 @@ class SocialGraph:
         Plan: BFT, use dictionary as visited
         """
         visited = {}  # Note that this is a dictionary, not a set
-​
         q = Queue()
         q.enqueue([user_id])
-​
         # while q isn't empty
         while q.size() > 0:
         ## dequeue the current path
             current_path = q.dequeue()
-​
+
         ## grab last vertex from path
             current_user = current_path[-1]
-​
             ## if it hasn't been visited
             if current_user not in visited:
         ### add to our dictionary
         #### { friend_id: path }
                 visited[current_user] = current_path
-​
                 friends = self.friendships[current_user]
         ### then enqueue PATHS TO each of our neighbors
                 for friend in friends:
                     path_to_friend = current_path + [friend]
-​
                     q.enqueue(path_to_friend)
         
         
         return visited
 
+
+
+    def linear_populate_graph(self, num_users, avg_friendships):
+        # Reset graph
+        self.last_id = 0
+        self.users = {}
+        self.friendships = {}
+        # Add users
+        ## use num_users
+        for user in range(num_users):
+            self.add_user(user)
+        # linear way to add the number of friendships we need?
+        target_number_friendships = num_users * avg_friendships
+        friendships_created = 0
+        ## as long as we haven't made all the friendships we need
+        while friendships_created < target_number_friendships:
+        ## pick 2 random numbers between 1 and the last id
+            friend_one = random.randint(1, self.last_id)
+            friend_two = random.randint(1, self.last_id)
+        ## try to create that friendship
+            friendship_was_made = self.add_friendship(friend_one, friend_two)
+        ### if we can, increment friendships by 2
+            if friendship_was_made:
+                friendships_created += 2
 
 
 if __name__ == '__main__':
@@ -123,3 +154,4 @@ if __name__ == '__main__':
     print(sg.friendships)
     connections = sg.get_all_social_paths(1)
     print(connections)
+  
