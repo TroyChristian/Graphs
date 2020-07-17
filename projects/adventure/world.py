@@ -9,13 +9,18 @@ class World:
         self.room_grid = []
         self.grid_size = 0
     def load_graph(self, room_graph):
-        num_rooms = len(room_graph)
-        rooms = [None] * num_rooms
+        num_rooms = len(room_graph) # How many keys are in the room_graph dictionary
+        rooms = [None] * num_rooms   # populate an array with None, the same amount as there are dict keys in room_graph
         grid_size = 1
         for i in range(0, num_rooms):
-            x = room_graph[i][0][0]
-            grid_size = max(grid_size, room_graph[i][0][0], room_graph[i][0][1])
+            x = room_graph[i][0][0] #value of key i = list, get first element, get first tuple, x =5
+            grid_size = max(grid_size, room_graph[i][0][0], room_graph[i][0][1])  #grid_size equals the biggest value of grid_size, i.x and i.y values
+
+            
             self.rooms[i] = Room(f"Room {i}", f"({room_graph[i][0][0]},{room_graph[i][0][1]})",i, room_graph[i][0][0], room_graph[i][0][1])
+             #room name = i,  desc string #   
+             #                                                  id = i, x defined        y defined
+             # populate rooms aray with info from rooms_graph used to create instances of Room
         self.room_grid = []
         grid_size += 1
         self.grid_size = grid_size
