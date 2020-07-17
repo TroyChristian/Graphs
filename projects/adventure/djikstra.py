@@ -90,6 +90,7 @@ def shortest_path(starting_room, target_room, graph = room_graph):
     explored_vertices = set() 
     traversal_path = [] 
     back_trace_trav_path = [] 
+    path_by_room_id = []
     #q = Queue()
     #q.enqueue([[starting_room]])
     starting_room = world.rooms[starting_room]
@@ -105,12 +106,14 @@ def shortest_path(starting_room, target_room, graph = room_graph):
         current_room = player.current_room.id 
         print(current_room)
         exits_discovered = discover_exits(player.current_room, explored_vertices) 
+        path_by_room_id.append(player.current_room.id)
 
         if len(exits_discovered) > 0: 
             
             for direction in exits_discovered:
                 
                 explored_vertices.add(room_graph[current_room][1][direction])
+                path_by_room_id.append(room_graph[current_room][1][direction])
 
                 
 
@@ -129,7 +132,10 @@ def shortest_path(starting_room, target_room, graph = room_graph):
                 if player.current_room == target_room:
                     #room_graph[current_room][1][direction]
                     print("ROOM FOUND")
+                    print("Room route:")
+                    print(path_by_room_id)
                     print(traversal_path)
+
                     return
                 break
         
