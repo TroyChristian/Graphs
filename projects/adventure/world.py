@@ -5,7 +5,7 @@ import math
 class World:
     def __init__(self):
         self.starting_room = None
-        self.rooms = {}
+        self.rooms = {} #rooms dictionary
         self.room_grid = []
         self.grid_size = 0
     def load_graph(self, room_graph):

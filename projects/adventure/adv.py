@@ -25,10 +25,30 @@ world.print_rooms()
 
 player = Player(world.starting_room)
 
+
+    
+
 # Fill this out with directions to walk
 # traversal_path = ['n', 'n']
 traversal_path = []
+back_trace_trav_path = [] 
+def discover_exits(current_room, explored_vertices):
+    exits_discovered = []
+    exits = current_room.get_exits()
+    for direction in exits:
+        if direction in room_graph[current_room.id][1].keys() and room_graph[current_room.id][1][direction] not in explored_vertices:
+            exits_discovered.append(direction)
+    
+    return exits_discovered
 
+def room_graph_printout(current_room):
+    print(room_graph[current_room.id][1].keys())
+    print(room_graph[current_room.id][1]['n'])
+
+print(room_graph_printout(world.starting_room))
+#1.check room graphs second array element which holds a dictionary {"n":1} for example
+ #2. if the vertice we reach by going "n" not in explored_vertices set. if 1 not a in explored_vertices
+#3.then "n" is a direction that leads to an new room.
 
 
 # TRAVERSAL TEST
@@ -48,15 +68,4 @@ else:
 
 
 
-#######
-# UNCOMMENT TO WALK AROUND
-#######
-player.current_room.print_room_description(player)
-while True:
-    cmds = input("-> ").lower().split(" ")
-    if cmds[0] in ["n", "s", "e", "w"]:
-        player.travel(cmds[0], True)
-    elif cmds[0] == "q":
-        break
-    else:
-        print("I did not understand that command.")
+
